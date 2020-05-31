@@ -2,3 +2,36 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-progress-spinner circle, .mat-spinner circle {
+    stroke: white;
+}
+
+.input-full-width {
+    width: 100%;
+}
+
+.txtCenter {
+    text-align: center;
+}
+
+.buttonPrimary {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.justify-content-center {
+    text-align: center;
+}
+
+.tableMargin {
+    margin: 7% 0% 0% 0%;
+}
+
+.btnSubmit {
+    background-color: var(--color-primary);
+    color: white;
+    width: 200px;
+    border-radius: 20px !important;
+    margin-left: 25% !important;
+}

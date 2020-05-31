@@ -1,0 +1,43 @@
+<div class="fondo">
+    <div class="materialContainer">
+        <div class="box">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="title">Login</div>
+                <p>
+                    <mat-form-field class="input-full-width">
+                        <input matInput formControlName="email" placeholder="Email" required />
+                        <mat-error *ngIf="
+                f.email.errors &&
+                (!f.email.errors.required || f.email.errors.pattern)
+              ">
+                            Por favor ingrese un correo electrónico <strong>válido</strong>
+                        </mat-error>
+                        <mat-error *ngIf="f.email.errors && f.email.errors.required">
+                            El correo electrónico es <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field class="input-full-width">
+                        <input matInput formControlName="password" required placeholder="Password" name="passwordLogin"
+                            type="password" />
+                        <mat-error *ngIf="
+                f.password.errors &&
+                f.password.errors.required && !f.password.errors.minlength
+              ">
+                            La contraseña es <strong>requerida</strong>
+                        </mat-error>
+                        <mat-error *ngIf="f.password.errors && f.password.errors.minlength">
+                            La contraseña debe contener mínimo <strong>6 caracteres</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </p>
+                <div class="txtCenter">
+                    <button mat-raised-button [disabled]="loading" color="primary">
+                        Ingresar<i class="fa fa-check"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
