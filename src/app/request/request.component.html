@@ -1,0 +1,83 @@
+<div *ngIf="user">
+    <div class="row">
+        <div class="column" style="width: 50%;">
+            <form [formGroup]="requestForm" (ngSubmit)="requestServiceFront()" style="margin-left: 7%;">
+                <h3>Request Details</h3>
+                <p class="titleInfo">Origin</p>
+                <p class="valueInfo txtOrigin">
+                    {{ user.address }}
+                </p>
+                <p class="titleInfo" style="margin-top: 15px;">Destination</p>
+                <mat-form-field appearance="fill" style="width: 85%;">
+                    <input matInput class="input" placeholder="Destination" formControlName="destination" #addresstext>
+                </mat-form-field>
+                <p class="services">Service Quantity</p>
+                <mat-form-field appearance="outline" class="selectQuantity">
+                    <mat-select formControlName="quantity">
+                        <mat-option value="1">1</mat-option>
+                        <mat-option value="2">2</mat-option>
+                        <mat-option value="3">3</mat-option>
+                        <mat-option value="4">4</mat-option>
+                        <mat-option value="5">5</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div style="text-align: center;">
+                    <button mat-raised-button type="button" (click)="calcApproximateValue()" class="approximateValue">
+                        Show Rute
+                    </button>
+                    <button mat-raised-button class="btnRequest">Request</button>
+                </div>
+            </form>
+            <hr style="width: 80%; border-color: white;margin-top: 5%;" />
+            <h2 class="titleServices">Services</h2>
+            <div class="infoServices">
+                <div class="notServices" *ngIf="ListRequest.length === 0 && ListAssigned.length === 0">
+                    <div class="materialContainer">
+                        <h3 class="titleNotRoutes">There aren't routes</h3>
+                    </div>
+                </div>
+                <div *ngFor="let assigned of ListAssigned">
+                    <div class="divRequest">
+                        <img [src]="assigned.driver.photo" width="60px" height="60px" style="border-radius: 50px;" />
+                        <div class="infoDriver" style="top: -12px;">
+                            <p class="m0 titleInfo">{{ assigned.driver.name }}</p>
+                            <p class="m0 valueInfo" style="width: 100%;">
+                                {{ assigned.driver.phone }}
+                                <span class="infoTaxi">Placa: {{ assigned.taxi.placa }} - Lateral:
+                                    {{ assigned.taxi.lateral }}</span>
+                                <span class="cancel"
+                                    (click)="cancelService(assigned.request_id, assigned.id, 'assigned', assigned.driver.id)">Cancel</span><span
+                                    class="arrive"
+                                    (click)="arriveTaxi(assigned.id, assigned.taxi.placa ,assigned.taxi.lateral, assigned.driver.id)">Arrive</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div *ngFor="let request of ListRequest">
+                    <div class="divRequest">
+                        <p>
+                            <span style="color: #949494;">{{ request.name }}</span>
+                            <span class="cancel"
+                                (click)="cancelService(request.request_id, request.id, 'request')">Cancel</span>
+                            <img src="../../assets/images/loading.gif" width="20px" height="20px"
+                                style="margin-left: 10px;float: right;" />
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column" style="width: 50%;">
+            <div class="divRemoveRoute" *ngIf='dataPolyline'>
+                <button mat-raised-button type="button" (click)="removeRoute()" class="removeRoute">
+                    Remove Route
+                </button>
+            </div>
+            <app-map heigth="100vh" [dataPrintUser]="dataPrintUser" [dataPrintDriver]="dataPrintDriver"
+                [dataPolyline]="dataPolyline" [removeDriver]="removeDriverMap" [removeRouteMap]="removeRouteMap"
+                (mapOutput)="getMap($event)"></app-map>
+        </div>
+    </div>
+</div>
+<div *ngIf="!user" class="center">
+    <h1>Please, allow permission locations</h1>
+</div>

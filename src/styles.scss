@@ -3,6 +3,11 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+$color-primary: #2E3190;
+$color-secondary: #FFC00D;
+$color-progress: #45E6FF;
+$color-arrive: #55AA00;
+
 .mat-progress-spinner circle, .mat-spinner circle {
     stroke: white;
 }
@@ -16,7 +21,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .buttonPrimary {
-    background-color: var(--color-primary);
+    background-color: $color-primary;
     color: white;
 }
 
@@ -29,7 +34,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .btnSubmit {
-    background-color: var(--color-primary);
+    background-color: $color-primary;
     color: white;
     width: 200px;
     border-radius: 20px !important;
