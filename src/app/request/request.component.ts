@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MessagesService } from '../../services/messages.service';
 import { RequestService } from '../../services/request.service';
+import { Router } from '@angular/router';
 declare const alertify: any;
 declare const google: any;
 declare const mapboxgl: any;
@@ -30,7 +31,10 @@ export class RequestComponent implements OnInit {
     private formBuilder: FormBuilder,
     private requestService: RequestService,
     private messagesService: MessagesService,
+    private router: Router,
   ) { }
+
+  get f() { return this.requestForm.controls; }
 
   ngOnInit() {
     // this.user = this.loginService.currentUserValue;
@@ -171,22 +175,51 @@ export class RequestComponent implements OnInit {
   }
 
   requestServiceFront() {
-    const res = this.requestForm.value.quantity
-    for (let i = 0; i < res.length; i++) {
+    if(this.requestForm.invalid) {
+      return;
+    }
+    const res = parseInt(this.requestForm.value.quantity)
+    for (let i = 1; i <= res; i++) {
       this.ListRequest.push({
         id: i,
-        name: 'Servicio ' + i,
+        name: 'Service ' + i,
       });
     }
+
+    setTimeout(() => {
+      this.assignedDrivers();
+    }, 5000);
+  }
+
+  assignedDrivers(){
+    const res = parseInt(this.requestForm.value.quantity)
+    for (let i = 1; i <= res; i++) {
+      const dataDriver = {
+        id: i,
+        driver_name: `Name`,
+        driver_last_name: `LastName Driver ${i}`,
+        driver_phone: `+573${Math.floor(Math.random() * 999999999 + 100000000)}`,
+        qualification: Math.floor(Math.random() * 5 + 1) ,
+        driver_id: i,
+        lateral: `${i}`,
+        placa: `${i}`,
+        device_id: i,
+        latitude: this.dataPrintUser.latitude + (Math.random() * (0.005 - 0.0001) + 0.0001) ,
+        longitude: this.dataPrintUser.longitude + (Math.random() * (0.005 - 0.0001) + 0.0001) ,
+      }
+      console.log(Math.random() * (0.005 - 0.0001) + 0.0001);
+      this.serviceAssigned(dataDriver);
+    }
+    
   }
 
   cancelService(request_id, id, array, id_driver = null) {
-    alertify.confirm(`Realmente desea cancelar el servicio?`,
+    alertify.confirm(`Do you want cancel the request?`,
       () => {
         this.removeServiceFront(id, array, id_driver);
       }, undefined)
-      .setHeader('Cancelar Servicio')
-      .set('labels', { ok: 'si', cancel: 'No' });
+      .setHeader('Cancel Service')
+      .set('labels', { ok: 'Yes', cancel: 'No' });
   }
 
   removeServiceFront(id, array, id_driver) {
@@ -198,7 +231,7 @@ export class RequestComponent implements OnInit {
         this.searchServiceRequest(id);
         break;
     }
-    this.messagesService.showSuccessNotification('Servicio Cancelado');
+    this.messagesService.showSuccessNotification('Canceled service!');
   }
 
   searchServiceRequest(id) {
@@ -231,7 +264,7 @@ export class RequestComponent implements OnInit {
       },
       taxi: {
         lateral: dataAssigned.lateral,
-        placa: dataAssigned.plaque,
+        placa: dataAssigned.placa,
       }
     }
     this.ListAssigned.push(data);
@@ -243,18 +276,25 @@ export class RequestComponent implements OnInit {
       longitude: dataAssigned.longitude,
       html: this.htmlInfoTaxi(data.taxi),
     }
+
+    // setTimeout(() => {
+    //   const res = parseInt(this.requestForm.value.quantity);
+    //   for (let i = 1; i <= res; i++) {
+    //     this.searchServiceAssigned(i, i);
+    //   }
+    // }, 10000);
   }
 
   arriveTaxi(id, placa, lateral, id_driver) {
-    alertify.confirm(`Realmente llegó tu taxi con placas ${placa} y lateral ${lateral}?`,
+    alertify.confirm(`Your car arrived?`,
       () => {
         this.searchServiceAssigned(id, id_driver);
       }, undefined)
-      .setHeader('Llegó tu Taxi')
-      .set('labels', { ok: 'si', cancel: 'No' });
+      .setHeader('Driver arrived')
+      .set('labels', { ok: 'Yes', cancel: 'No' });
   }
 
-  getPlaceAutocomplete() { //this.addresstext.nativeElement; this.requestForm.value.destination
+  getPlaceAutocomplete() {
     const autocomplete = new google.maps.places.Autocomplete(this.addresstext.nativeElement, {
       componentRestrictions: { country: this.user.country },
       types: ['address']
@@ -265,6 +305,11 @@ export class RequestComponent implements OnInit {
         destination: place.name
       });
     });
+  }
+
+  exit() {
+    localStorage.removeItem('userLogged');
+    this.router.navigate(['/']);
   }
 
 }

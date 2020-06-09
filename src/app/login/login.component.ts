@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('userLogged', this.f.email.value);
         this.router.navigate(['/request']);
       } else {
-        this.messagesService.showErrorNotification('Credenciales inválidas');
+        this.messagesService.showErrorNotification('Invalid credentials');
         this.loading = false;
       }
     });

@@ -215,6 +215,7 @@ export class MapComponent implements OnInit {
 
   removeMarkerDriver(driver_id) {
     if(driver_id) {
+      console.log(this.drivers)
       this.drivers[driver_id].marker.remove();
       delete this.drivers[driver_id];
     }

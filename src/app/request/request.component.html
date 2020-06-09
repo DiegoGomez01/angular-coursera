@@ -1,6 +1,13 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <span>Request</span>
+        <span class="example-spacer"></span>
+        <mat-icon class="example-icon exit" aria-hidden="false" aria-label="signout" (click)="exit()">login</mat-icon>
+    </mat-toolbar-row>
+</mat-toolbar>
 <div *ngIf="user">
     <div class="row">
-        <div class="column" style="width: 50%;">
+        <div class="column" style="width: 50%; margin-top: 5%;">
             <form [formGroup]="requestForm" (ngSubmit)="requestServiceFront()" style="margin-left: 7%;">
                 <h3>Request Details</h3>
                 <p class="titleInfo">Origin</p>
@@ -10,17 +17,22 @@
                 <p class="titleInfo" style="margin-top: 15px;">Destination</p>
                 <mat-form-field appearance="fill" style="width: 85%;">
                     <input matInput class="input" placeholder="Destination" formControlName="destination" #addresstext>
+                    <mat-error *ngIf="f.destination.errors && f.destination.errors.required">
+                        Destination, is a <strong>required</strong> field
+                    </mat-error>
                 </mat-form-field>
-                <p class="services">Service Quantity</p>
-                <mat-form-field appearance="outline" class="selectQuantity">
-                    <mat-select formControlName="quantity">
-                        <mat-option value="1">1</mat-option>
-                        <mat-option value="2">2</mat-option>
-                        <mat-option value="3">3</mat-option>
-                        <mat-option value="4">4</mat-option>
-                        <mat-option value="5">5</mat-option>
-                    </mat-select>
-                </mat-form-field>
+                <div style="text-align: center;">
+                    <p class="services">Service Quantity</p>
+                    <mat-form-field appearance="outline" class="selectQuantity">
+                        <mat-select formControlName="quantity">
+                            <mat-option value="1">1</mat-option>
+                            <mat-option value="2">2</mat-option>
+                            <mat-option value="3">3</mat-option>
+                            <mat-option value="4">4</mat-option>
+                            <mat-option value="5">5</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
                 <div style="text-align: center;">
                     <button mat-raised-button type="button" (click)="calcApproximateValue()" class="approximateValue">
                         Show Rute
@@ -43,8 +55,7 @@
                             <p class="m0 titleInfo">{{ assigned.driver.name }}</p>
                             <p class="m0 valueInfo" style="width: 100%;">
                                 {{ assigned.driver.phone }}
-                                <span class="infoTaxi">Placa: {{ assigned.taxi.placa }} - Lateral:
-                                    {{ assigned.taxi.lateral }}</span>
+                                <span class="infoTaxi">Placa: {{ assigned.taxi.placa }} - Lateral: {{ assigned.taxi.lateral }}</span>
                                 <span class="cancel"
                                     (click)="cancelService(assigned.request_id, assigned.id, 'assigned', assigned.driver.id)">Cancel</span><span
                                     class="arrive"
@@ -67,17 +78,17 @@
             </div>
         </div>
         <div class="column" style="width: 50%;">
-            <div class="divRemoveRoute" *ngIf='dataPolyline'>
+            <!-- <div class="divRemoveRoute" >
                 <button mat-raised-button type="button" (click)="removeRoute()" class="removeRoute">
                     Remove Route
                 </button>
-            </div>
-            <app-map heigth="100vh" [dataPrintUser]="dataPrintUser" [dataPrintDriver]="dataPrintDriver"
+            </div> -->
+            <app-map heigth="95vh" [dataPrintUser]="dataPrintUser" [dataPrintDriver]="dataPrintDriver"
                 [dataPolyline]="dataPolyline" [removeDriver]="removeDriverMap" [removeRouteMap]="removeRouteMap"
                 (mapOutput)="getMap($event)"></app-map>
         </div>
     </div>
 </div>
 <div *ngIf="!user" class="center">
-    <h1>Please, allow permission locations</h1>
+    <h1>Please, allow permission locations for this browser</h1>
 </div>

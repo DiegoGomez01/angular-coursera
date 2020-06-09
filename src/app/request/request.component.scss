@@ -27,20 +27,6 @@ $color-secondary: #FFC00D;
 	position: relative;
 	top: -90px;
 	margin-left: 8%;
-	&::ng-deep {
-		.mat-form-field-flex {
-			background-color: #FAFAFA;
-			padding: 0;
-			padding-top: 3px !important;
-		}
-		.mat-form-field-infix {
-			padding: 0;
-			border: 0;
-		}
-		input.mat-input-element {
-			color: grey;
-		}
-	}
 }
 .txtOrigin {
 	margin-top: 5px;
@@ -60,15 +46,6 @@ $color-secondary: #FFC00D;
 	font-size: 15px !important;
 	color: gray;
 	font-size: 14px;
-	&::ng-deep {
-		.mat-form-field-infix {
-			padding: 10px 0 10px 0;
-			border: 0;
-		}
-		.mat-form-field-outline {
-			color: rgba(0,0,0,.12);
-		}
-	}
 }
 .fieldValueService {
 	width: 35%;
@@ -76,31 +53,8 @@ $color-secondary: #FFC00D;
 .inputNote {
 	top: -25px;
 	width: 100%;
-	&::ng-deep {
-		.mat-form-field-flex {
-			background-color: #FAFAFA;
-			padding: 0;
-			padding-top: 3px !important;
-		}
-		input.mat-input-element {
-			color: grey;
-		}
-		.mat-form-field-infix {
-			padding: 0;
-			border: 0;
-		}
-	}
 }
 .infoQuantity {
-	&::ng-deep {
-		.mat-form-field-infix {
-			border: 0;
-			padding-bottom: 6px;
-		}
-		.mat-select-arrow-wrapper {
-			padding-top: 5px;
-		}
-	}
 	top: -50px;
 	position: relative;
 }
@@ -208,4 +162,10 @@ $color-secondary: #FFC00D;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.exit {
+	cursor: pointer;
+	width: 100%;
+	text-align: right;
 }

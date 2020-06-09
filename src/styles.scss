@@ -40,3 +40,31 @@ $color-arrive: #55AA00;
     border-radius: 20px !important;
     margin-left: 25% !important;
 }
+
+.marker {
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    top: -25px;
+}
+
+.img-marker-user {
+    background-image: url('./assets/images/ubication.png');
+}
+
+.img-marker-driver {
+    background-image: url('./assets/images/taxi_assigned.png');
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: white !important;
+}
+
+.mat-form-field-infix {
+    border-top: 0;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 1em 0 0.5em 0;
+}
