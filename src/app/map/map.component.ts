@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, SimpleChanges, EventEmitter } from '@
 import polyline from '@mapbox/polyline';
 import * as mapboxgl from 'mapbox-gl';
 import _ from 'lodash';
+import {environment} from '../../environments/environment';
+
 declare const mapboxgl: any;
 
 @Component({
@@ -160,7 +162,7 @@ export class MapComponent implements OnInit {
       navigationControl: false,
       mapTypeControl: false
     };
-    mapboxgl.accessToken = 'pk.eyJ1IjoiZGllZ29nb21leiIsImEiOiJjam5qaW1xeXMwenNsM2tueXFiZWZ1andiIn0.suJs58a1pOpL4c-rQzU2VA';
+    mapboxgl.accessToken = `${environment.KeyMapboxComponent}`;
     if(!this.map) {
       this.map = new mapboxgl.Map(options);
       document.getElementById('map').style.height = this.heigth;
