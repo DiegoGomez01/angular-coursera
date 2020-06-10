@@ -1,12 +1,16 @@
-var PORT = process.env.PORT || 5000;
-var express = require('express');
-var app = express();
-
-var http = require('http');
-var server = http.Server(app);
-
-app.use(express.static('client'));
-
-server.listen(PORT, function() {
-  console.log('Server running');
+//Install express server
+const express = require('express');
+const path = require('path');
+ 
+const app = express();
+ 
+// Serve only the static files form the angularapp directory
+app.use(express.static(__dirname + '/finalProject'));
+ 
+app.get('/*', function(req,res) {
+ 
+res.sendFile(path.join(__dirname+'/finalProject/index.html'));
 });
+ 
+// Start the app by listening on the default Heroku port
+app.listen(process.env.PORT || 8080);
